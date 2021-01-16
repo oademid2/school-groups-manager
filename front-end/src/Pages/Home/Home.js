@@ -5,7 +5,9 @@ function Home() {
   return (
     <div className="home mobile-root">
         home page
-       
+        - view prioritized tasks
+        - view task
+        - update task
     </div>
   );
 }

@@ -1,9 +1,9 @@
 
 import { BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 import './App.css';
-import HomePage from './Pages/Home.js'
-import Kanban from './Pages/Kanban.js'
-import Groups from './Pages/Groups.js'
+import HomePage from './Pages/Home/Home.js'
+import Kanban from './Pages/Kanban/Kanban.js'
+import Groups from './Pages/Groups/Groups.js'
 
 
 function App() {

@@ -17,7 +17,7 @@
 
 }
 
-ul {
+.app-nav-bar ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -25,11 +25,11 @@ ul {
   background-color: #333;
 }
 
-li {
+.app-nav-bar li {
   float: left;
 }
 
-li a {
+.app-nav-bar  li a {
   display: block;
   color: white;
   text-align: center;
@@ -37,7 +37,7 @@ li a {
   text-decoration: none;
 }
 
-li a:hover {
+.app-nav-bar li a:hover {
   background-color: #111;
 }
 

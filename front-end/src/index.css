@@ -5,6 +5,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /*sizing for mobile prototype*/
+  max-width:375px;
+  overflow-x: hidden;
 }
 
 code {

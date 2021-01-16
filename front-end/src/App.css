@@ -7,6 +7,16 @@
   pointer-events: none;
 }
 
+/*sizing for mobile prototype*/
+.mobile-root{
+  background-color: blue;
+  min-height:667px;
+  min-width:375px;
+  overflow-y:scroll;
+  overflow-x: hidden;
+
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -14,7 +24,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: red;
   min-height: 100vh;
   display: flex;
   flex-direction: column;

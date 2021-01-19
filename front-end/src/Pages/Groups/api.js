@@ -36,6 +36,26 @@ class api{
         return apiCompletionPromise;
     }
 
+    static getUserGroups = (userID) => {
+
+        const apiCompletionPromise = request({
+            method: 'get',
+            url: this._url + '/get/usergroups?courseID='+'123',
+        })
+
+        return apiCompletionPromise;
+    }
+
+    static removeGroupMember = (groupID) => {
+
+        const apiCompletionPromise = request({
+            method: 'delete',
+            url: this._url + '/delete/removegroupmember?groupID='+'123',
+        })
+
+        return apiCompletionPromise;
+    }
+
     static sendGroupRequest = (userID, groupID) => {
 
         groupID = 123;
@@ -47,12 +67,44 @@ class api{
         return apiCompletionPromise;
     }
 
+    static getReceivedGroupRequest = (userID) => {
+
+        const apiCompletionPromise = request({
+            method: 'get',
+            url: this._url + '/get/receivedgrouprequest?userID='+userID,
+        })
+
+        return apiCompletionPromise;
+    }
+
     static cancelGroupRequest = (userID, groupID) => {
 
         groupID = 123;
         const apiCompletionPromise = request({
             method: 'delete',
-            url: this._url + '/delete/grouprequest?userID='+userID+'&groupID='+ groupID,
+            url: this._url + '/delete/cancelgrouprequest?userID='+userID+'&groupID='+ groupID,
+        })
+
+        return apiCompletionPromise;
+    }
+
+    static rejectReceivedGroupRequest = (req) => {
+
+        const apiCompletionPromise = request({
+            method: 'delete',
+            data: request,
+            url: this._url + '/delete/rejectreceivedgrouprequest'
+        })
+
+        return apiCompletionPromise;
+    }
+
+    static acceptReceivedGroupRequest = (req) => {
+
+        const apiCompletionPromise = request({
+            method: 'put',
+            data: req,
+            url: this._url + '/put/acceptreceivedgrouprequest'
         })
 
         return apiCompletionPromise;

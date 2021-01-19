@@ -1,6 +1,9 @@
 .groups{
     background-color: white;
     font-family: Helvetica, sans-serif;
+    min-height:600px !important;
+    max-height:600px !important;
+    overflow: scroll;
 }
 
 
@@ -10,8 +13,10 @@
     display: inline-block;
     font-size: 25px;
     text-decoration: none;
-  }
-  .groups-topnav a{
+    margin: 20px 0px;
+}
+
+.groups-topnav a{
     text-decoration: none;
 }
 
@@ -30,18 +35,6 @@
   }
 
 
-  .collapsible {
-    background-color: rgb(156, 64, 64);
-    color: white;
-    cursor: pointer;
-    padding: 18px;
-    width: 100%;
-    border: none;
-    text-align: left;
-    outline: none;
-    font-size: 15px;
-  }
-  
   .active, .collapsible:hover {
     background-color: rgb(180, 96, 96);
   }

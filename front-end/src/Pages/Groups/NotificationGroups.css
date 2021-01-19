@@ -1,0 +1,67 @@
+
+.notifications-panel{
+    background-color: brown;
+    margin-top: 0px;
+}
+
+.notifications-grid{
+    background-color: rgb(255, 255, 255);
+    max-height: 380px;
+    min-height: 380px;
+    overflow: scroll;
+    border: 1px solid;
+    border-color: rgb(221, 221, 221);
+}
+
+.request-card{
+    display: inline-block;
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid;
+    border-color: rgb(221, 221, 221);
+    padding: 10px 10px;
+    margin: 0px;
+    float: left;
+}
+.request-card-text{
+    float: left;
+    padding-left: 0px;
+    color: black;
+}
+
+.request-card-text p{
+    margin:0px;
+    padding-left: 0px;
+    text-align: left;
+}
+
+.notifications-panel-title{
+    font-weight: 700px;
+    background-color: rgb(199, 199, 199);
+    background: black;
+    padding: 10px;
+}
+
+.request-card-btns {
+    float: right;
+    margin:0px;
+}
+
+.request-card-btns button{
+    margin-left: 10px;
+}
+
+
+.accept{
+    background-color: rgb(63, 165, 63);
+    color: white;
+    border: none;
+    padding: 7px;
+}
+
+.decline{
+    background-color: rgb(206, 44, 44);
+    color: white;
+    border: none;
+    padding: 7px;
+}

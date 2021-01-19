@@ -1,12 +1,56 @@
-.collapsible{
-    background-color: rgb(219, 215, 215);
-    color: black;
-    border: 0.5px solid;
+
+.manage-groups-panel-title{
+    background-color: rgb(0, 0, 0);
+    padding: 15px;
+    margin: 0px;
 }
 
-.collapsable-menu-item{
-    padding: 10px;
-    border: 0.2px solid; 
+.manage-groups-panel-card-title{
     color: black;
+    background-color: rgb(219, 215, 215);
+    border: 1px solid;
+    border-color: rgb(140, 140, 140);
+
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+}
+
+.manage-groups-panel-grid{
+    background-color: rgb(255, 255, 255);
+    border: 1px solid;
+    border-color: rgb(221, 219, 219);
+    margin: 0px;
+    min-height: 400px;
+    max-height: 400px;
+    overflow: scroll;
+}
+
+.manage-groups-panel-card-item{
+    padding: 5px;
+    border: 0.2px solid; 
     border-color: rgb(234, 231, 231);
+    display: inline-block;
+    float: left;
+    color: black;
+    width: 100%;
+}
+
+
+.manage-groups-panel-card-item .member-name{
+    float: left;
+    margin:0px;
+    padding-left: 8px;
+    color: black;
+}
+
+.manage-groups-panel-card-item .member-remove{
+    float: right;
+    margin:0px;
+    margin-right: 8px;
+    border: none;
+    
 }

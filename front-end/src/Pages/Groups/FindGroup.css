@@ -1,0 +1,147 @@
+.groups-dropdown-menu-items{
+    opacity: 1;
+    height:auto;
+    transition: all .2s ease;
+    max-height: 270px;
+    overflow: scroll;
+}
+.groups-dropdown-menu-items2{
+opacity: 1;
+height:auto;
+transition: all .2s ease;
+max-height: 300px;
+overflow: scroll;
+}
+
+
+.groups-dropdown-menu-item{
+    padding: 10px;
+    border: 0.2px solid; 
+    border-color: rgb(234, 231, 231);
+}
+
+.groups-dropdown-menu-item-small{
+    padding: 5px;
+    border: 0.2px solid; 
+    border-color: rgb(234, 231, 231);
+    display: inline-block;
+    width: 100%;
+}
+
+
+.groups-dropdown-menu-subtitle{
+    border-color: rgb(234, 231, 231);
+    background-color: rgb(210, 210, 210);
+    display: inline-block;
+    width: 100%;
+    padding: 5px 0px;
+}
+
+.groups-dropdown-menu-subtitle .group-id{
+    float: left;
+    margin:0px;
+    padding-left: 8px;
+}
+
+.groups-dropdown-menu-item-small .member-name{
+    float: left;
+    margin:0px;
+    padding-left: 8px;
+}
+
+.groups-dropdown-menu-item-small .member-invite{
+    float: right;
+    margin:0px;
+    margin-right: 8px;
+    border: none;
+    
+}
+.groups-dropdown-menu-subtitle .req-btn{
+    float: right;
+    margin:0px;
+    margin-right: 8px;
+    border: none;
+    
+}
+.menu-transition{
+    opacity: 1;
+    height:140px;
+}
+.find-groups-panel{
+  margin-top:20px;
+}
+
+.find-groups-modecontainer{
+display: block;
+margin-bottom:20px;
+background-color: #4CAF50;
+}
+
+.grey-scale-btn{
+background-color:#dcdcdc ;
+color: black;
+font-family: Helvetica, sans-serif;
+}
+
+.grey-scale-btn{
+background-color:#dcdcdc ;
+color: black;
+font-family: Helvetica, sans-serif;
+}
+
+.find-groups-btn{
+box-shadow: 0px 0px 0px transparent;
+border: 2px solid transparent;
+
+width:45%;
+margin:0 8px;
+margin-top: 0px;
+margin-bottom: 20px;
+font-weight: 700;
+
+display: inline-block;
+text-align:center;
+background-color:#dcdcdc ;
+color: black;
+padding: 8px 8px;
+
+border-radius: 8px;;
+
+}
+
+.find-groups-btn.active{
+
+background-color:#a9a9a9 ;
+color: black;
+
+border-radius: 8px;;
+
+}
+
+.transition{
+transition: all .5s ease;
+}
+
+
+.groups-dropdown-menu{
+    background-color:white;
+    color: black
+    
+
+}
+
+.groups-dropdown-menu-title{
+    font-weight: 700;
+    color:black;
+    border: 1px solid;
+    border-color: rgb(196, 189, 189);
+    background-color:white;
+    padding: 10px;
+
+}
+
+.collapsable-groups{
+  max-height: 420px;
+  overflow: hidden;
+}
+

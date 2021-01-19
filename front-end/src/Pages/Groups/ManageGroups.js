@@ -1,4 +1,5 @@
 import './Groups.css';
+import './ManageGroups.css';
 
 import React, { useState,  useEffect} from 'react';
 import { Collapse } from 'antd';
@@ -67,7 +68,7 @@ function ManageGroups() {
                         {panel.course+" "+panel.component}
                     </span>
 
-                    {panel.show? <NameListCard users={panel.members}></NameListCard>:<div></div>}
+                    {panel.show? <NameListCard className ="collapsable-menu-item" users={panel.members}></NameListCard>:<div></div>}
                     </div>
                 )
         
@@ -84,7 +85,7 @@ function NameListCard(props){
         {
             props.users.map(member =>{
                 return(
-                <div>
+                <div className={props.className}>
                     <h4><button>remove</button> {member.name}  </h4>
                 </div>
                 )

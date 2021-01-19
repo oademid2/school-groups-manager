@@ -25,6 +25,7 @@ class api{
         return apiCompletionPromise;
     }
 
+
     static getCourseMembers = (courseName) => {
 
         const apiCompletionPromise = request({
@@ -40,11 +41,23 @@ class api{
         groupID = 123;
         const apiCompletionPromise = request({
             method: 'post',
-            url: this._url + '/get/coursemembers?userID='+userID+'&groupID='+ groupID,
+            url: this._url + '/post/grouprequest?userID='+userID+'&groupID='+ groupID,
         })
 
         return apiCompletionPromise;
     }
+
+    static cancelGroupRequest = (userID, groupID) => {
+
+        groupID = 123;
+        const apiCompletionPromise = request({
+            method: 'delete',
+            url: this._url + '/delete/grouprequest?userID='+userID+'&groupID='+ groupID,
+        })
+
+        return apiCompletionPromise;
+    }
+
 
 
 }

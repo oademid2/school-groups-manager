@@ -1,4 +1,4 @@
-import './Groups.css';
+import './FindGroup.css';
 import React, { useState, useEffect} from 'react';
 import api from './api.js'
 
@@ -21,12 +21,10 @@ function FindGroup() {
     //Display Data Varaibles
     const[userCourses, setUserCourses] = useState([]);
     const[activeCourse, setActiveCourse] = useState(null);
-    //const[activeCourseMembers, setActiveCourseMembers] = useState(null);
+    const[activeCourseMembers, setActiveCourseMembers] = useState([]);
     const[activeCourseComponents, setActiveCourseComponents] = useState([]);
     const[activeCourseGroups, setActiveCourseGroups] = useState([]);
     const[activeComponent, setActiveComponent] = useState(null);
-    //const[showCourseMembers, setShowCourseMembers] = useState(false);
-
     const[activeGroup, setActiveGroup] = useState(null);
 
     //Display conditionals
@@ -45,29 +43,38 @@ function FindGroup() {
  
 
   function courseSelected(e){
+
       //reset other collapsables
       resetCourse();
 
-      //
+      //get course that was selected
       var courseName = e.target.getAttribute('id');
       var activeCoursesComponents_ = userCourses.find(course => course.courseName === courseName).components;
      
+      //set this as selected course
       setActiveCourse(courseName)
       setActiveCourseComponents(activeCoursesComponents_)
 
   }
 
     function componentSelected(e){
-        //TODO: get component based on selection
+
+        //get selected component
         var componentName = e.target.getAttribute('id');
         console.log(componentName)
         
         console.log(activeComponent)
+        if(findGroupsMode){
+            setActiveCourseMembers(["kitan", "josh", "nick", "steven","kitan", "josh", "nick", "steven","kitan", "josh", "nick", "steven","kitan", "josh", "nick", "steven"])
+            setActiveComponent(componentName)
+            return
+        }
+        
+        setActiveComponent(componentName)
         api.getOpenGroups(activeCourse, componentName).then((res) =>{
 
             if(res.data.hasGroup)setActiveGroup(res.data.groups[0])
             setActiveCourseGroups(res.data.groups)
-            setActiveComponent(componentName)
             console.log(res.data,"members loaded.")
         })
     }
@@ -81,6 +88,22 @@ function FindGroup() {
         })
     }
 
+    function cancelGroupRequest(group){
+        var groupID = group.groupID;
+        setActiveGroup(null)
+        api.cancelGroupRequest(userID, groupID).then((res)=>{
+            setActiveGroup(null)
+            api.getOpenGroups(activeCourse, "Lab5").then((res) =>{
+
+                if(res.data.hasGroup)setActiveGroup(res.data.groups[0])
+                setActiveCourseGroups(res.data.groups)
+                setActiveComponent(activeComponent)
+                console.log(res.data,"members loaded.")
+            })
+
+        })
+    }
+
     function resetCourse(){
         setActiveCourse(false)
         resetCourseComponent();
@@ -89,6 +112,7 @@ function FindGroup() {
     function resetCourseComponent(){
         setActiveComponent(null);
         setActiveGroup(null);
+        setActiveCourseMembers([]);
         setActiveCourseGroups(null);
     }
     /*TODO:
@@ -99,8 +123,14 @@ function FindGroup() {
     <div className="groups-panel find-groups-panel">
 
         <div className="find-groups-mode-container">
-            <div onClick={()=> {setFindGroupsMode(true)}} className={`find-groups-btn ${findGroupsMode? "active":""}`}>CREATE</div>
-            <div onClick={()=> setFindGroupsMode(false)} className={`find-groups-btn ${!findGroupsMode? "active":""}`}>JOIN</div>
+            <div onClick={()=> {
+                setFindGroupsMode(true)
+                resetCourse()
+                }} className={`find-groups-btn ${findGroupsMode? "active":""}`}>CREATE</div>
+            <div onClick={()=> {
+                setFindGroupsMode(false)
+                resetCourse()
+            }} className={`find-groups-btn ${!findGroupsMode? "active":""}`}>JOIN</div>
         </div>
         
         <div className="collapsable-groups">
@@ -133,7 +163,22 @@ function FindGroup() {
 
         <div className="groups-dropdown-menu">
         <div className="groups-dropdown-menu-title">Select A Group</div>
-        <div className={`groups-dropdown-menu-items`}>
+        {
+            findGroupsMode?
+                <div className={`groups-dropdown-menu-items2`}>
+                     {activeCourseMembers.map(member =>{
+                        return(
+                            <div>
+                            <div className="groups-dropdown-menu-item-small" >
+                            <span id={member} className="member-name">{member}</span> 
+                            <button id={member} className="member-invite">invite</button> 
+                                </div>  
+                            </div> 
+                        )
+                    }) }
+                </div>
+            :
+            <div className={`groups-dropdown-menu-items`}>
             {activeCourseGroups?
                 
                 activeCourseGroups.map(group =>{
@@ -151,7 +196,7 @@ function FindGroup() {
                                   :
                                   <div>
                                     <span className="group-id">Group: {group.groupID}</span> 
-                                    <button onClick={() => sendGroupRequest(group)} className="req-btn">cancel request</button>
+                                    <button onClick={() => cancelGroupRequest(group)} className="req-btn">cancel request</button>
                                 </div>
                                }
                             </div>
@@ -165,10 +210,10 @@ function FindGroup() {
                         </div>
                     )
                 })
-               :<div></div>
-                
+               :<div></div>   
             }
-            </div>
+        </div>
+        }
         </div>
         </div>
 

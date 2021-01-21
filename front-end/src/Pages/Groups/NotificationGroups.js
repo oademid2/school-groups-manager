@@ -3,6 +3,7 @@ import './NotificationGroups.css';
 import { BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import api from './api';
+import groupReq from './receivedGroupRequests.json'
 
 
 
@@ -18,9 +19,11 @@ function NotificationGroups() {
 
 
   function getReceivedGroupRequest(){
-    api.getReceivedGroupRequest(userID).then((res)=>{
+    setPendingRequests(groupReq)
+    //API
+    /*api.getReceivedGroupRequest(userID).then((res)=>{
       setPendingRequests(res.data)
-    })
+    })*/
   }
   function rejectReceivedGroupRequest(request){
 
@@ -32,9 +35,10 @@ function NotificationGroups() {
     setPendingRequests(copyRequest)
     request.status = "rejected"
 
-      api.rejectReceivedGroupRequest(request).then(res =>{
+    //API
+      /*api.rejectReceivedGroupRequest(request).then(res =>{
         console.log("request rejected.")
-      })
+      })*/
   }
 
   function acceptReceivedGroupRequest(request){
@@ -46,9 +50,12 @@ function NotificationGroups() {
     }
     setPendingRequests(copyRequest)
     request.status = "accepted"
+
+
+    /*//API CALL
     api.acceptReceivedGroupRequest(request).then(res =>{
       console.log("request accepted.")
-    })
+    })*/
 }
 
 

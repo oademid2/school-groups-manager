@@ -4,6 +4,7 @@ import './ManageGroups.css';
 import React, { useState,  useEffect} from 'react';
 import { Collapse } from 'antd';
 import api from './api';
+import groupsJSON from './groups.json'
 
 
 const { Panel } = Collapse;
@@ -36,12 +37,17 @@ function ManageGroups() {
     }, []);
     
     function getUserGroups(){
-        api.getUserGroups(userID).then((res)=>{
+
+        setGroupsPanel(groupsJSON)
+        //console.log(res,"user groups loaded.")
+
+        //API
+        /*api.getUserGroups(userID).then((res)=>{
             
             setGroupsPanel(res.data)
             console.log(res,"user groups loaded.")
 
-        })
+        })*/
     }
 
     function removeTeamMember(member, id){
@@ -64,9 +70,10 @@ function ManageGroups() {
         setGroupsPanel(copyGroupsPanel)
         console.log("display has removed member.")
 
-        api.removeGroupMember(123).then(res =>{
+        //API
+        /*api.removeGroupMember(123).then(res =>{
             console.log("server has removed member.")
-        })
+        })*/
 
 
         

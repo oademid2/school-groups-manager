@@ -109,6 +109,17 @@ class api{
 
         return apiCompletionPromise;
     }
+    
+    static getCoursesInfo = (userID) => {
+
+        const apiCompletionPromise = request({
+            method: 'get',
+            url: this._url + '/get/coursesinfo?userID='+userID,
+        })
+
+        return apiCompletionPromise;
+    }
+
 
 
 

@@ -1,6 +1,8 @@
 import './FindGroup.css';
 import React, { useState, useEffect} from 'react';
 import api from './api.js'
+import coursesJSON from './courses.json'
+import groupsJSON from './groups.json'
 
 var courses = [
     {courseName: "SE4455B",
@@ -19,6 +21,7 @@ var userID = 123;
 function FindGroup() {
 
     //Display Data Varaibles
+    const[courseInfo, setCourseInfo] = useState(null);
     const[userCourses, setUserCourses] = useState([]);
     const[activeCourse, setActiveCourse] = useState(null);
     const[activeCourseMembers, setActiveCourseMembers] = useState([]);
@@ -33,75 +36,77 @@ function FindGroup() {
     //check cache for course names, automatically load course names into JSON file -- keep this stored
     //load as JSON friendly
     useEffect(() => {
-        // Your code here
-        api.getCourses(userID).then((res)=>{
+        // TODO: move to groups.js set courses based on props
+        setUserCourses(coursesJSON)
+        console.log("courses info loaded.")
+
+        //API CALL
+        /*api.getCoursesInfo(userID).then((res)=>{
             setUserCourses(res.data)
-            console.log("user courses loaded.")
-        })
+            console.log(res.data,"courses info loaded.")
+        })*/
+       
     }, []);
 
  
 
-  function courseSelected(e){
+  function courseSelected(course){
 
-      //reset other collapsables
       resetCourse();
-
-      //get course that was selected
-      var courseName = e.target.getAttribute('id');
-      var activeCoursesComponents_ = userCourses.find(course => course.courseName === courseName).components;
-     
-      //set this as selected course
-      setActiveCourse(courseName)
-      setActiveCourseComponents(activeCoursesComponents_)
+      setActiveCourse(course)
+      setActiveCourseComponents(course.components)
 
   }
 
-    function componentSelected(e){
-
-        //get selected component
-        var componentName = e.target.getAttribute('id');
-        console.log(componentName)
+    function componentSelected(component){
         
-        console.log(activeComponent)
         if(findGroupsMode){
             setActiveCourseMembers(["kitan", "josh", "nick", "steven","kitan", "josh", "nick", "steven","kitan", "josh", "nick", "steven","kitan", "josh", "nick", "steven"])
-            setActiveComponent(componentName)
+            setActiveComponent(component)
             return
         }
         
-        setActiveComponent(componentName)
-        api.getOpenGroups(activeCourse, componentName).then((res) =>{
-
-            if(res.data.hasGroup)setActiveGroup(res.data.groups[0])
-            setActiveCourseGroups(res.data.groups)
-            console.log(res.data,"members loaded.")
-        })
+        var groupMemberOf = groupsJSON.find(group => (group.course == activeCourse.courseName) && (group.component == component.name))
+        console.log(groupMemberOf)
+        setActiveComponent(component)
+        if(component.groupMemberOf)setActiveGroup(component.groupMemberOf)
+        else setActiveCourseGroups(component.groups)
+        console.log("members loaded.")
     }
 
     function sendGroupRequest(group){
         var groupID = group.groupID;
-        setActiveCourseGroups([group])
+        group.status = "pending"
+
         setActiveGroup(group)
-        api.sendGroupRequest(userID, groupID).then((res)=>{
-            setActiveGroup(group)
-        })
+        setActiveCourseGroups([group])
+
+
+        var userCourses_ = userCourses;
+        var selectedComponent = userCourses.find(course => course.courseName === activeCourse.courseName).components.find(cmp => cmp.name = activeComponent.name);
+        selectedComponent.groupMemberOf = group;
+        
+        setUserCourses(userCourses_)
+        
+        //api.sendGroupRequest(userID, groupID)
+    }
+
+    function testButton(){
+        var groupMemberOf = [1,2,3].find(group => (group.courseName == activeCourse.courseName) && (group.componentID == activeComponent.name))
+        console.log(groupMemberOf)
     }
 
     function cancelGroupRequest(group){
+
         var groupID = group.groupID;
+        var selectedComponent = userCourses.find(course => course.courseName === activeCourse.courseName).components.
+        find(cmp => cmp.name = activeComponent.name);
+
+        selectedComponent.groupMemberOf = null;
+
         setActiveGroup(null)
-        api.cancelGroupRequest(userID, groupID).then((res)=>{
-            setActiveGroup(null)
-            api.getOpenGroups(activeCourse, "Lab5").then((res) =>{
-
-                if(res.data.hasGroup)setActiveGroup(res.data.groups[0])
-                setActiveCourseGroups(res.data.groups)
-                setActiveComponent(activeComponent)
-                console.log(res.data,"members loaded.")
-            })
-
-        })
+        setActiveCourseGroups(selectedComponent.groups)
+        //api.cancelGroupRequest(userID, group.groupID)
     }
 
     function resetCourse(){
@@ -124,8 +129,9 @@ function FindGroup() {
 
         <div className="find-groups-mode-container">
             <div onClick={()=> {
-                setFindGroupsMode(true)
-                resetCourse()
+                //setFindGroupsMode(true)
+                //resetCourse()
+                testButton()
                 }} className={`find-groups-btn ${findGroupsMode? "active":""}`}>CREATE</div>
             <div onClick={()=> {
                 setFindGroupsMode(false)
@@ -135,12 +141,12 @@ function FindGroup() {
         
         <div className="collapsable-groups">
         <div className="groups-dropdown-menu">
-        <div onClick={resetCourse} className="groups-dropdown-menu-title">{activeCourse? activeCourse: "Select A Course"}</div>
+        <div onClick={resetCourse} className="groups-dropdown-menu-title">{activeCourse? activeCourse.courseName: "Select A Course"}</div>
             <div className="">
                 {!activeCourse?
                     userCourses.map(course =>{
                         return(
-                            <div className="groups-dropdown-menu-item" onClick ={courseSelected} id={course.courseName}>{course.courseName} </div>
+                            <div className="groups-dropdown-menu-item" onClick ={()=>courseSelected(course)} id={course.courseName}>{course.courseName} </div>
                         )
                     }):<div></div>
                 }
@@ -148,13 +154,13 @@ function FindGroup() {
         </div>
 
         <div className="groups-dropdown-menu">
-        <div onClick={resetCourseComponent} className="groups-dropdown-menu-title">{activeComponent? activeComponent : "Select A Course"}</div>
+        <div onClick={resetCourseComponent} className="groups-dropdown-menu-title">{activeComponent? activeComponent.name : "Select A Course"}</div>
         <div className={`groups-dropdown-menu-items`}>
                 
             {(activeCourse && !activeComponent)?
                 activeCourseComponents.map(component=>{
                     return(
-                        <div className="groups-dropdown-menu-item" id={component} onClick ={componentSelected}>{component} </div>
+                        <div className="groups-dropdown-menu-item" id={component.name} onClick ={()=>componentSelected(component)}>{component.name} </div>
                     )
                 }):<div></div>
             }
@@ -203,7 +209,7 @@ function FindGroup() {
                             {group.members.map(member =>{
                                     return(
                                         <div>
-                                        <div className="groups-dropdown-menu-item-small" >{member.Name} </div>  
+                                        <div className="groups-dropdown-menu-item-small" >{member.name} </div>  
                                         </div> 
                                     )
                                 }) }

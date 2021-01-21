@@ -1,0 +1,4 @@
+courses.json
+
+return array of courseInfo JSON objects
+-

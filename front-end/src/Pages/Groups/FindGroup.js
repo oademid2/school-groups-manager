@@ -1,11 +1,14 @@
 import './FindGroup.css';
 import React, { useState, useEffect} from 'react';
 import api from './api.js'
+
+import { Collapse } from 'antd';
+
 import coursesJSON from './courses.json'
 import groupsJSON from './groups.json'
 
 
-
+const { Panel } = Collapse;
 var userID = 123;
 
 function FindGroup() {
@@ -168,32 +171,33 @@ function FindGroup() {
         </div>
         
         <div className="collapsable-groups">
-        <div className="groups-dropdown-menu">
-        <div onClick={resetCourse} className="groups-dropdown-menu-title">{activeCourse? activeCourse.courseName: "Select A Course"}</div>
-            <div className="">
-                {!activeCourse?
-                    userCourses.map(course =>{
-                        return(
-                            <div className="groups-dropdown-menu-item" onClick ={()=>courseSelected(course)} id={course.courseName}>{course.courseName} </div>
-                        )
-                    }):<div></div>
-                }
-            </div>
-        </div>
 
-        <div className="groups-dropdown-menu">
-        <div onClick={resetCourseComponent} className="groups-dropdown-menu-title">{activeComponent? activeComponent.name : "Select A Course"}</div>
-        <div className={`groups-dropdown-menu-items`}>
-                
-            {(activeCourse && !activeComponent)?
-                activeCourseComponents.map(component=>{
-                    return(
-                        <div className="groups-dropdown-menu-item" id={component.name} onClick ={()=>componentSelected(component)}>{component.name} </div>
-                    )
-                }):<div></div>
-            }
-        </div>
-        </div>
+ 
+       <DropdownPanel 
+            showPanel={!activeCourse}
+            activeData={activeCourse} 
+            panelsData={userCourses} 
+            togglePanel={resetCourse}
+            panelClicked={courseSelected}
+            defaultTitle={"Select A Course"}
+            activeTitle ={activeCourse? activeCourse.courseName:null}
+            ID = "id"
+            panelTitle="courseName">
+        </DropdownPanel>
+        <DropdownPanel 
+            showPanel={(activeCourse && !activeComponent)}
+            activeData={activeComponent} 
+            panelsData={activeCourseComponents} 
+            togglePanel={resetCourseComponent}
+            panelClicked={componentSelected}
+            defaultTitle={"Select A Component"}
+            activeTitle ={activeComponent? activeComponent.name:null}
+            ID = "name"
+            panelTitle="name">
+        </DropdownPanel>
+
+  
+    
 
         <div className="groups-dropdown-menu">
         <div className="groups-dropdown-menu-title">{activeGroup? "already in group":"Select A Group"}</div>
@@ -278,21 +282,57 @@ function FindGroup() {
   );
 }
 
-function groupsModeBtn(props){
+
+
+function DropdownPanel(props){
     return(
-    <div>
-        {
-            props.users.map(member =>{
-                return(
-                <div>
-                    <h4><button>remove</button> {member.name}  </h4>
-                </div>
-                )
-            })
-        }
-    </div>
+        <div className="groups-dropdown-menu">
+        <div onClick={props.togglePanel} className="groups-dropdown-menu-title">{props.activeData? props.activeTitle: props.defaultTitle}</div>
+            <div>
+                {props.showPanel?
+                    props.panelsData.map(panel =>{
+                        return(
+                            <div className="groups-dropdown-menu-item" onClick ={()=>props.panelClicked(panel)} id={panel[props.ID]}>{panel[props.panelTitle]} </div>
+                        )
+                    }):<div></div>
+                }
+            </div>
+        </div>
+
     );
 
 }
 export default FindGroup;
 
+
+/*
+
+   <div className="groups-dropdown-menu">
+        <div onClick={resetCourse} className="groups-dropdown-menu-title">{activeCourse? activeCourse.courseName: "Select A Course"}</div>
+            <div className="">
+                {!activeCourse?
+                    userCourses.map(course =>{
+                        return(
+                            <div className="groups-dropdown-menu-item" onClick ={()=>courseSelected(course)} id={course.courseName}>{course.courseName} </div>
+                        )
+                    }):<div></div>
+                }
+            </div>
+        </div>
+
+            <div className="groups-dropdown-menu">
+        <div onClick={resetCourseComponent} className="groups-dropdown-menu-title">{activeComponent? activeComponent.name : "Select A Course"}</div>
+        <div className={`groups-dropdown-menu-items`}>
+                
+            {(activeCourse && !activeComponent)?
+                activeCourseComponents.map(component=>{
+                    return(
+                        <div className="groups-dropdown-menu-item" id={component.name} onClick ={()=>componentSelected(component)}>{component.name} </div>
+                    )
+                }):<div></div>
+            }
+        </div>
+        </div>
+      
+
+*/

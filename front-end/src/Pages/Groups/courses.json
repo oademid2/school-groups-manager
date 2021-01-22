@@ -7,7 +7,6 @@
             {   "id":"Lab4",
                 "courseID":"123",
                 "name":"Lab4",
-                "groupMemberOf": false,
                 "groups":[
                     {
                         "groupID":"123",

@@ -25,7 +25,6 @@ function FindGroup() {
     //Display conditionals
     const[findGroupsMode, setFindGroupsMode] = useState(0);
 
-    //check cache for course names, automatically load course names into JSON file -- keep this stored
     //load as JSON friendly
     useEffect(() => {
         // TODO: move to groups.js set courses based on props
@@ -60,13 +59,6 @@ function FindGroup() {
     function componentSelected(component){
         
         var groupMemberOf = groupsList.find(group => (group.course == activeCourse.courseName) && (group.component == component.name))
-
-       /* if(findGroupsMode){
-            //setActiveCourseMembers(["kitan", "josh", "nick", "steven","kitan", "josh", "nick", "steven","kitan", "josh", "nick", "steven","kitan", "josh", "nick", "steven"])
-            if(groupMemberOf)setPartOfGroup(groupMemberOf)
-            return
-        }*/
-        
        
         setActiveComponent(component)
         if(groupMemberOf){
@@ -304,17 +296,3 @@ function groupsModeBtn(props){
 }
 export default FindGroup;
 
-
-/*
-
-
-activeCourseMembers.map(member =>{
-                    return(
-                        <div>
-                        <div onClick ={componentSelected}>{member} <button>request</button> </div>  
-                        </div> 
-                    )
-                })
-
-
-    */

@@ -5,6 +5,9 @@ import ManageGroups from './ManageGroups';
 import FindGroup from './FindGroup';
 import NotificationGroups from './NotificationGroups';
 
+import coursesJSON from './courses.json'
+import groupsJSON from './groups.json'
+
 
 
 

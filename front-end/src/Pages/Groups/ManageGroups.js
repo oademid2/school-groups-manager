@@ -9,12 +9,6 @@ import groupsJSON from './groups.json'
 
 const { Panel } = Collapse;
 
-
-
-
-
-
-
 const userID = 123;
 function ManageGroups() {
     
@@ -94,29 +88,33 @@ function ManageGroups() {
                 return(
                     <div>
 
-                    <span  onClick={() => toggleGroupsCollapsable(panel)} 
-                    type="button" class="manage-groups-panel-card-title">
-                        {panel.course+" "+panel.component} {panel.owner? "[OWNER]":""} {panel.status =="pending"? "[pending]":""}
+                    <span  
+                        onClick={() => toggleGroupsCollapsable(panel)} 
+                        type="button" class="manage-groups-panel-card-title">
+                        {panel.course+" "+panel.component} {panel.owner? "[OWNER]":""} 
+                        {panel.status =="pending"? "[pending]":""}
                     </span>
 
                     {panel.show?
                      //<NameListCard  group={panel} removeTeamMember={removeTeamMember} isOwner={panel.owner} users={panel.members}></NameListCard>
-                     <div>
-                     {
-                         panel.members.map(member =>{
-                             return(
-                             <div className ="manage-groups-panel-card-item">
-                 
-                                 <div className="member-name"> {member.name} </div>
-                                 {panel.owner && member.userID != userID? <button onClick={()=> removeTeamMember(member.name, panel.id)} className="member-remove">remove</button>:<div></div>}
-                             </div>
-                             )
-                         })
+                        <div>
+                            {
+                                panel.members.map(member =>{
+                                    return(
+
+                                    <div className ="manage-groups-panel-card-item">
+                                        <div className="member-name"> {member.name} </div>
+                                        {panel.owner && member.userID != userID? <button onClick={()=> removeTeamMember(member.name, panel.id)} className="member-remove">remove</button>:<div></div>}
+                                    </div>
+
+                                    )
+                                })
+                            }
+
+                        </div>
+
+                        :<div></div>
                      }
-
-                    </div>
-
-                     :<div></div>}
                     </div>
                 )
         
@@ -130,24 +128,6 @@ function ManageGroups() {
   );
 }
 
-function NameListCard(props){
-    return(
-    <div>
-        {
-            props.users.map(member =>{
-                return(
-                <div className ="manage-groups-panel-card-item">
-    
-                    <div className="member-name"> {member.name} </div>
-                    {props.isOwner? <button onClick={()=> props.removeTeamMember(member.name, props.group.id)} className="member-remove">remove</button>:<div></div>}
-                </div>
-                )
-            })
-        }
-    </div>
-    );
-
-}
 
 export default ManageGroups;
 

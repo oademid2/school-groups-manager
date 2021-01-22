@@ -1,198 +1,41 @@
 
 [
     {
-        "courseID": "SE4455B",
-        "courseName": "SE4455B",
+        "id": "SE4455",
+        "title": "SE4455B",
         "components": [
-            {   "id":"Lab4",
-                "courseID":"123",
-                "name":"Lab4",
+            {   "id":"L1",
+                "courseID":"SE4455",
+                "title" :"Lab1",
                 "groups":[
                     {
                         "groupID":"123",
-                        "courseID":"123",
-                        "componentID":"123",
-                        "id":0,
-                        "course":"SE4455B",
-                        "component":"Lab4",
-                        "groupID":"123",
-                        "courseID":"123",
-                        "componentID":"123",
+                        "courseID":"SE4455",
+                        "componentID":"L1",
+                        "courseTitle":"SE4455B",
+                        "componentTitle":"Lab1",
                         "status":"accepted",
                         "members":[
                             {
                                 "userID": "123",
-                                "name": "Kitan",
-                                "picture_url": "example.com"
+                                "name": "Kitan"
                             },
                             {
                                 "userID": "124",
-                                "name": "Josh",
-                                "picture_url": "example.com"
+                                "name": "Josh"
                             },
                             {
                                 "userID": "125",
-                                "name": "Steve",
-                                "picture_url": "example.com"
+                                "name": "Steve"
                             },
                             {
                                 "userID": "126",
-                                "name": "Nick",
-                                "picture_url": "example.com"
-                            }
-                        ]
-                    },
-                    {
-                        "groupID":"123",
-                        "courseID":"123",
-                        "componentID":"123",
-                        "members":[
-                            {
-                                "userID": "123",
-                                "name": "Kitan",
-                                "picture_url": "example.com"
-                            },
-                            {
-                                "userID": "124",
-                                "name": "Josh",
-                                "picture_url": "example.com"
-                            },
-                            {
-                                "userID": "125",
-                                "name": "Steve",
-                                "picture_url": "example.com"
-                            },
-                            {
-                                "userID": "126",
-                                "name": "Nick",
-                                "picture_url": "example.com"
-                            }
-                        ]
-                    },
-                    {
-                        "groupID":"123",
-                        "courseID":"123",
-                        "componentID":"123",
-                        "members":[
-                            {
-                                "userID": "123",
-                                "name": "Kitan",
-                                "picture_url": "example.com"
-                            },
-                            {
-                                "userID": "124",
-                                "name": "Josh",
-                                "picture_url": "example.com"
-                            },
-                            {
-                                "userID": "125",
-                                "name": "Steve",
-                                "picture_url": "example.com"
-                            },
-                            {
-                                "userID": "126",
-                                "name": "Nick",
-                                "picture_url": "example.com"
+                                "name": "Nick"
                             }
                         ]
                     }
                 ]
-            },
-
-            {   "name":"Lab5",
-                "groupMemberOf": false,
-                "groups":[
-                    {
-                        "groupID":"123",
-                        "courseID":"123",
-                        "componentID":"123",
-                        "id":0,
-                        "course":"SE4455B",
-                        "component":"Lab4",
-                        "groupID":"123",
-                        "courseID":"123",
-                        "componentID":"123",
-                        "status":"accepted",
-                        "members":[
-                            {
-                                "userID": "123",
-                                "name": "Kitan",
-                                "picture_url": "example.com"
-                            },
-                            {
-                                "userID": "124",
-                                "name": "Josh",
-                                "picture_url": "example.com"
-                            },
-                            {
-                                "userID": "125",
-                                "name": "Steve",
-                                "picture_url": "example.com"
-                            },
-                            {
-                                "userID": "126",
-                                "name": "Nick",
-                                "picture_url": "example.com"
-                            }
-                        ]
-                    },
-                    {
-                        "groupID":"123",
-                        "courseID":"123",
-                        "componentID":"123",
-                        "members":[
-                            {
-                                "userID": "123",
-                                "name": "Kitan",
-                                "picture_url": "example.com"
-                            },
-                            {
-                                "userID": "124",
-                                "name": "Josh",
-                                "picture_url": "example.com"
-                            },
-                            {
-                                "userID": "125",
-                                "name": "Steve",
-                                "picture_url": "example.com"
-                            },
-                            {
-                                "userID": "126",
-                                "name": "Nick",
-                                "picture_url": "example.com"
-                            }
-                        ]
-                    },
-                    {
-                        "groupID":"123",
-                        "courseID":"123",
-                        "componentID":"123",
-                        "members":[
-                            {
-                                "userID": "123",
-                                "name": "Kitan",
-                                "picture_url": "example.com"
-                            },
-                            {
-                                "userID": "124",
-                                "name": "Josh",
-                                "picture_url": "example.com"
-                            },
-                            {
-                                "userID": "125",
-                                "name": "Steve",
-                                "picture_url": "example.com"
-                            },
-                            {
-                                "userID": "126",
-                                "name": "Nick",
-                                "picture_url": "example.com"
-                            }
-                        ]
-                    }
-                ]
-            },
-            {"name":"Lab3", "members":[]}
+            }
         ]
 
     }

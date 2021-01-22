@@ -2,28 +2,23 @@ import './FindGroup.css';
 import React, { useState, useEffect} from 'react';
 import api from './api.js'
 
-import { Collapse } from 'antd';
-
 import coursesJSON from './courses.json'
 import groupsJSON from './groups.json'
 
+import GroupsDropDownPanel from './components/GroupsDropDownPanel.js'
 
-const { Panel } = Collapse;
 var userID = 123;
 
 function FindGroup() {
 
     //Display Data Varaibles
-    const[courseInfo, setCourseInfo] = useState(null);
     const[userCourses, setUserCourses] = useState([]);
     const[activeCourse, setActiveCourse] = useState(null);
-    const[activeCourseMembers, setActiveCourseMembers] = useState([]);
     const[activeCourseComponents, setActiveCourseComponents] = useState([]);
     const[activeCourseGroups, setActiveCourseGroups] = useState([]);
     const[activeComponent, setActiveComponent] = useState(null);
     const[activeGroup, setActiveGroup] = useState(null);
     const[groupsList, setGroupsList] = useState(null)
-    const[partOfGroup, setPartOfGroup] = useState(null)
 
     //Display conditionals
     const[findGroupsMode, setFindGroupsMode] = useState(0);
@@ -61,7 +56,7 @@ function FindGroup() {
 
     function componentSelected(component){
         
-        var groupMemberOf = groupsList.find(group => (group.course == activeCourse.courseName) && (group.component == component.name))
+        var groupMemberOf = groupsList.find(group => (group.course == activeCourse.title) && (group.component == component.title))
        
         setActiveComponent(component)
         if(groupMemberOf){
@@ -69,51 +64,6 @@ function FindGroup() {
             setActiveCourseGroups([groupMemberOf])
         }else setActiveCourseGroups(component.groups)
         console.log("members loaded.")
-    }
-
-    function sendGroupRequest(group){
-
-        var groupsList_ = groupsList
-
-        group.status = "pending"
-        groupsList_.push(group)
-
-        setActiveGroup(group)
-        setActiveCourseGroups([group])
-        setGroupsList(groupsList_)
-
-        
-
-        /*var userCourses_ = userCourses;
-        var selectedComponent = userCourses_.find(course => course.courseName === activeCourse.courseName).components.find(cmp => cmp.name = activeComponent.name);
-        selectedComponent.groups.push(group)
-        setUserCourses(userCourses_)
-        console.log(userCourses_)*/
-        
-        /*api.sendGroupRequest(userID, groupID).then(res =>{
-            setUserCourses(res.data)
-        })*/
-    }
-
-    function testButton(){
-       
-    }
-
-    function cancelGroupRequest(group){
-
-        var groupsList_ = groupsList;
-        var selectedGroup = groupsList_.find(grp => grp.groupID == group.groupID)
-
-        var groupIndex = groupsList_.indexOf(selectedGroup)
-        if (groupIndex !== -1) {
-            groupsList_.splice(groupIndex, 1);
-        }
-
-
-        setActiveGroup(null)
-        setActiveCourseGroups(activeComponent.groups)
-        setGroupsList(groupsList_)
-        //api.cancelGroupRequest(userID, group.groupID)
     }
 
     function resetCourse(){
@@ -124,12 +74,11 @@ function FindGroup() {
     function resetCourseComponent(){
         setActiveComponent(null);
         setActiveGroup(null);
-        setActiveCourseMembers([]);
         setActiveCourseGroups(null);
     }
     function createNewGroup(){
         var groupsList_ = groupsList
-        var newgroup= {
+        var newgroup = {
             "id":0,
             "owner": true,
             "course":"SE4455B",
@@ -151,10 +100,7 @@ function FindGroup() {
         setActiveGroup(newgroup)        
         //api.createNewGroup(userID)
     }
-    /*TODO:
-    - options for members
-    - click on members
-    */
+
   return (
     <div className="groups-panel find-groups-panel">
 
@@ -177,12 +123,14 @@ function FindGroup() {
             showPanel={!activeCourse}
             activeData={activeCourse} 
             panelsData={userCourses} 
-            togglePanel={resetCourse}
+            togglePanel={null}
             panelClicked={courseSelected}
             defaultTitle={"Select A Course"}
-            activeTitle ={activeCourse? activeCourse.courseName:null}
+            activeTitle ={activeCourse? activeCourse.title:null}
             ID = "id"
-            panelTitle="courseName">
+            panelTitle="title"
+            //customPanel={CustomPanel({text: "heyyyyy"})}
+           >
         </DropdownPanel>
         <DropdownPanel 
             showPanel={(activeCourse && !activeComponent)}
@@ -191,9 +139,9 @@ function FindGroup() {
             togglePanel={resetCourseComponent}
             panelClicked={componentSelected}
             defaultTitle={"Select A Component"}
-            activeTitle ={activeComponent? activeComponent.name:null}
-            ID = "name"
-            panelTitle="name">
+            activeTitle ={activeComponent? activeComponent.title:null}
+            ID = "title"
+            panelTitle="title">
         </DropdownPanel>
 
   
@@ -206,32 +154,25 @@ function FindGroup() {
                 <div className={`groups-dropdown-menu-items2`}>
                     
                          {activeGroup?
-                            <div>
-
-                             <div className="groups-dropdown-menu-subtitle">
-                             <span className="group-id">Group: {activeGroup.groupID}</span> 
-                           <button className="req-btn">{activeGroup.status == "pending"? "pending":"member"}</button>
+                            <GroupsDropDownPanel 
+                                group={activeGroup}
+                                activeGroup={activeGroup}
+                                setActiveGroup={setActiveGroup}
+                                groupsList={groupsList}
+                                setGroupsList={setGroupsList}
+                                onRemove={
+                                    function(){
+                                        setActiveCourseGroups(activeComponent.groups)
+                                        //groupsJSON = groupsList
+                                        console.log("sub")
+                                    }
+                                }>
+                            </GroupsDropDownPanel>:
+                            <div className="groups-dropdown-menu-subtitle">
+                                <span className="group-id">No Group Yet.</span> 
+                                <button onClick={createNewGroup}className="req-btn">Create Group</button>
                             </div>
-                          
-                          
-                           {activeGroup.members.map(member =>{
-                                    return(
-                                        <div>
-                                        <div className="groups-dropdown-menu-item-small" >{member.name} </div>  
-                                        </div> 
-                                    )
-                            }) }
-                         </div>:
-                        <div className="groups-dropdown-menu-subtitle">
-                           <span className="group-id">No Group Yet.</span> 
-                           <button onClick={createNewGroup}className="req-btn">Create Group</button>
-                       </div>
-                         
-                        
-                        }
-                          
-           
-                    
+                        }                    
                 </div>
             :
             <div className={`groups-dropdown-menu-items`}>
@@ -240,35 +181,26 @@ function FindGroup() {
                 activeCourseGroups.map(group =>{
                    
                     return(
-                        <div>
-                           <div className="groups-dropdown-menu-subtitle">
-                               
-                               {
-                                   !activeGroup?
-                                   <div>
-                                        <span className="group-id">Group: {group.groupID}</span> 
-                                        <button onClick={() => sendGroupRequest(group)} className="req-btn">ask to join</button>
-                                   </div>
-                                  :
-                                  <div>
-                                    <span className="group-id">Group: {group.groupID}</span> 
-                                    {group.status == "pending"?
-                                    <button onClick={() => cancelGroupRequest(group)} className="req-btn">cancel request</button>:
-                                    <button  className="req-btn">member</button>
-                                    
-                                    }
-                                </div>
-                               }
-                            </div>
-                            {group.members.map(member =>{
-                                    return(
-                                        <div>
-                                        <div className="groups-dropdown-menu-item-small" >{member.name} </div>  
-                                        </div> 
-                                    )
-                                }) }
-                        </div>
-                    )
+                        <GroupsDropDownPanel 
+                        group={group}
+                        activeGroup={activeGroup}
+                        setActiveGroup={setActiveGroup}
+                        groupsList={groupsList}
+                        setGroupsList={setGroupsList}
+                        onRequest={
+                            function(){
+                                setActiveCourseGroups([group])
+                                props.groupsJSON = groupsJSON;
+                            }
+
+                        }
+                        onRemove={
+                            function(){
+                                setActiveCourseGroups(activeComponent.groups)
+                                console.log("sub")
+                            }
+                        }>
+                    </GroupsDropDownPanel>)
                 })
                :<div></div>   
             }
@@ -284,6 +216,8 @@ function FindGroup() {
 
 
 
+
+
 function DropdownPanel(props){
     return(
         <div className="groups-dropdown-menu">
@@ -292,7 +226,23 @@ function DropdownPanel(props){
                 {props.showPanel?
                     props.panelsData.map(panel =>{
                         return(
-                            <div className="groups-dropdown-menu-item" onClick ={()=>props.panelClicked(panel)} id={panel[props.ID]}>{panel[props.panelTitle]} </div>
+                            <div>
+                            {!props.customPanel?
+                               
+                               <div 
+                                className="groups-dropdown-menu-item" 
+                                onClick ={()=>props.panelClicked(panel)} 
+                                id={panel[props.ID]}>
+                                    {panel[props.panelTitle]} 
+                                </div>
+                            
+                                :
+
+                                <div>
+                                    {props.customPanel}
+                                </div>
+                            }
+                            </div>
                         )
                     }):<div></div>
                 }
@@ -333,6 +283,14 @@ export default FindGroup;
             }
         </div>
         </div>
+
+                
+
+        var userCourses_ = userCourses;
+        var selectedComponent = userCourses_.find(course => course.courseName === activeCourse.courseName).components.find(cmp => cmp.name = activeComponent.name);
+        selectedComponent.groups.push(group)
+        setUserCourses(userCourses_)
+        console.log(userCourses_)
       
 
 */

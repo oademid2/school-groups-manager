@@ -1,4 +1,6 @@
-courses.json
 
-return array of courseInfo JSON objects
+
+getCouseInfo
+return courses.json
+- array of courseInfo JSON objects
 -

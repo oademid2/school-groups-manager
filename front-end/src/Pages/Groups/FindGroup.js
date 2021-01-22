@@ -4,17 +4,7 @@ import api from './api.js'
 import coursesJSON from './courses.json'
 import groupsJSON from './groups.json'
 
-var courses = [
-    {courseName: "SE4455B",
-    components: ["Lab1", "Lab2", "Lab3"]},
 
-    {courseName: "SE4455A",
-    components: ["Lab1", "Lab2", "Lab3"]}
-]
-
-var components = ["Lab1", "Lab2", "Lab3"]
-
-var members = ["a", "b", "c"]
 
 var userID = 123;
 
@@ -29,6 +19,8 @@ function FindGroup() {
     const[activeCourseGroups, setActiveCourseGroups] = useState([]);
     const[activeComponent, setActiveComponent] = useState(null);
     const[activeGroup, setActiveGroup] = useState(null);
+    const[groupsList, setGroupsList] = useState(null)
+    const[partOfGroup, setPartOfGroup] = useState(null)
 
     //Display conditionals
     const[findGroupsMode, setFindGroupsMode] = useState(0);
@@ -38,12 +30,19 @@ function FindGroup() {
     useEffect(() => {
         // TODO: move to groups.js set courses based on props
         setUserCourses(coursesJSON)
+        setGroupsList(groupsJSON)
         console.log("courses info loaded.")
 
         //API CALL
         /*api.getCoursesInfo(userID).then((res)=>{
             setUserCourses(res.data)
             console.log(res.data,"courses info loaded.")
+        })*/
+        /*api.getUserGroups(userID).then((res)=>{
+            
+            setGroupsList(res.data)
+            console.log(res,"user groups loaded.")
+
         })*/
        
     }, []);
@@ -60,52 +59,65 @@ function FindGroup() {
 
     function componentSelected(component){
         
-        if(findGroupsMode){
-            setActiveCourseMembers(["kitan", "josh", "nick", "steven","kitan", "josh", "nick", "steven","kitan", "josh", "nick", "steven","kitan", "josh", "nick", "steven"])
-            setActiveComponent(component)
+        var groupMemberOf = groupsList.find(group => (group.course == activeCourse.courseName) && (group.component == component.name))
+
+       /* if(findGroupsMode){
+            //setActiveCourseMembers(["kitan", "josh", "nick", "steven","kitan", "josh", "nick", "steven","kitan", "josh", "nick", "steven","kitan", "josh", "nick", "steven"])
+            if(groupMemberOf)setPartOfGroup(groupMemberOf)
             return
-        }
+        }*/
         
-        var groupMemberOf = groupsJSON.find(group => (group.course == activeCourse.courseName) && (group.component == component.name))
-        console.log(groupMemberOf)
+       
         setActiveComponent(component)
-        if(component.groupMemberOf)setActiveGroup(component.groupMemberOf)
-        else setActiveCourseGroups(component.groups)
+        if(groupMemberOf){
+            setActiveGroup(groupMemberOf)
+            setActiveCourseGroups([groupMemberOf])
+        }else setActiveCourseGroups(component.groups)
         console.log("members loaded.")
     }
 
     function sendGroupRequest(group){
-        var groupID = group.groupID;
+
+        var groupsList_ = groupsList
+
         group.status = "pending"
+        groupsList_.push(group)
 
         setActiveGroup(group)
         setActiveCourseGroups([group])
+        setGroupsList(groupsList_)
 
-
-        var userCourses_ = userCourses;
-        var selectedComponent = userCourses.find(course => course.courseName === activeCourse.courseName).components.find(cmp => cmp.name = activeComponent.name);
-        selectedComponent.groupMemberOf = group;
         
+
+        /*var userCourses_ = userCourses;
+        var selectedComponent = userCourses_.find(course => course.courseName === activeCourse.courseName).components.find(cmp => cmp.name = activeComponent.name);
+        selectedComponent.groups.push(group)
         setUserCourses(userCourses_)
+        console.log(userCourses_)*/
         
-        //api.sendGroupRequest(userID, groupID)
+        /*api.sendGroupRequest(userID, groupID).then(res =>{
+            setUserCourses(res.data)
+        })*/
     }
 
     function testButton(){
-        var groupMemberOf = [1,2,3].find(group => (group.courseName == activeCourse.courseName) && (group.componentID == activeComponent.name))
-        console.log(groupMemberOf)
+       
     }
 
     function cancelGroupRequest(group){
 
-        var groupID = group.groupID;
-        var selectedComponent = userCourses.find(course => course.courseName === activeCourse.courseName).components.
-        find(cmp => cmp.name = activeComponent.name);
+        var groupsList_ = groupsList;
+        var selectedGroup = groupsList_.find(grp => grp.groupID == group.groupID)
 
-        selectedComponent.groupMemberOf = null;
+        var groupIndex = groupsList_.indexOf(selectedGroup)
+        if (groupIndex !== -1) {
+            groupsList_.splice(groupIndex, 1);
+        }
+
 
         setActiveGroup(null)
-        setActiveCourseGroups(selectedComponent.groups)
+        setActiveCourseGroups(activeComponent.groups)
+        setGroupsList(groupsList_)
         //api.cancelGroupRequest(userID, group.groupID)
     }
 
@@ -120,6 +132,30 @@ function FindGroup() {
         setActiveCourseMembers([]);
         setActiveCourseGroups(null);
     }
+    function createNewGroup(){
+        var groupsList_ = groupsList
+        var newgroup= {
+            "id":0,
+            "owner": true,
+            "course":"SE4455B",
+            "component":"Lab4",
+            "groupID":"123",
+            "courseID":"123",
+            "componentID":"123",
+            "status":"accepted",
+            "members":[
+                {
+                    "userID": userID,
+                    "name": "user.name",
+                    "picture_url": "example.com"
+                }
+            ]
+    }
+        groupsList_.push(newgroup)
+        setGroupsList(groupsList_)
+        setActiveGroup(newgroup)        
+        //api.createNewGroup(userID)
+    }
     /*TODO:
     - options for members
     - click on members
@@ -129,9 +165,9 @@ function FindGroup() {
 
         <div className="find-groups-mode-container">
             <div onClick={()=> {
-                //setFindGroupsMode(true)
-                //resetCourse()
-                testButton()
+                setFindGroupsMode(true)
+                resetCourse()
+                //testButton()
                 }} className={`find-groups-btn ${findGroupsMode? "active":""}`}>CREATE</div>
             <div onClick={()=> {
                 setFindGroupsMode(false)
@@ -168,20 +204,38 @@ function FindGroup() {
         </div>
 
         <div className="groups-dropdown-menu">
-        <div className="groups-dropdown-menu-title">Select A Group</div>
+        <div className="groups-dropdown-menu-title">{activeGroup? "already in group":"Select A Group"}</div>
         {
-            findGroupsMode?
+            activeComponent && findGroupsMode?
                 <div className={`groups-dropdown-menu-items2`}>
-                     {activeCourseMembers.map(member =>{
-                        return(
+                    
+                         {activeGroup?
                             <div>
-                            <div className="groups-dropdown-menu-item-small" >
-                            <span id={member} className="member-name">{member}</span> 
-                            <button id={member} className="member-invite">invite</button> 
-                                </div>  
-                            </div> 
-                        )
-                    }) }
+
+                             <div className="groups-dropdown-menu-subtitle">
+                             <span className="group-id">Group: {activeGroup.groupID}</span> 
+                           <button className="req-btn">{activeGroup.status == "pending"? "pending":"member"}</button>
+                            </div>
+                          
+                          
+                           {activeGroup.members.map(member =>{
+                                    return(
+                                        <div>
+                                        <div className="groups-dropdown-menu-item-small" >{member.name} </div>  
+                                        </div> 
+                                    )
+                            }) }
+                         </div>:
+                        <div className="groups-dropdown-menu-subtitle">
+                           <span className="group-id">No Group Yet.</span> 
+                           <button onClick={createNewGroup}className="req-btn">Create Group</button>
+                       </div>
+                         
+                        
+                        }
+                          
+           
+                    
                 </div>
             :
             <div className={`groups-dropdown-menu-items`}>
@@ -202,7 +256,11 @@ function FindGroup() {
                                   :
                                   <div>
                                     <span className="group-id">Group: {group.groupID}</span> 
-                                    <button onClick={() => cancelGroupRequest(group)} className="req-btn">cancel request</button>
+                                    {group.status == "pending"?
+                                    <button onClick={() => cancelGroupRequest(group)} className="req-btn">cancel request</button>:
+                                    <button  className="req-btn">member</button>
+                                    
+                                    }
                                 </div>
                                }
                             </div>

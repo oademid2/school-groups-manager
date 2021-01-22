@@ -3,10 +3,11 @@
         "id":0,
         "owner": true,
         "course":"SE4455B",
-        "component":"Lab4",
-        "groupID":"123",
+        "component":"Lab34",
+        "groupID":"127",
         "courseID":"123",
         "componentID":"123",
+        "status":"accepted",
         "members":[
             {
                 "userID": "123",
@@ -34,7 +35,10 @@
         "id":1,
         "show": false,
         "course":"SE4455",
-        "component":"lab 1",
+        "component":"Lab 2",
+        "groupID":"124",
+        "courseID":"123",
+        "componentID":"123",
         "members":[
             {
                 "userID": "123",
@@ -62,7 +66,10 @@
         "id":2,
         "show": false,
         "course":"SE4455",
-        "component":"lab 1",
+        "component":"Lab 3",
+        "groupID":"125",
+        "courseID":"123",
+        "componentID":"123",
         "members":[
             {
                 "userID": "123",

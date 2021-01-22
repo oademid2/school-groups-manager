@@ -25,10 +25,12 @@ function ManageGroups() {
 
 
    
-    function toggleGroupsCollapsable(i) {
+    function toggleGroupsCollapsable(panel) {
         var updatedPanel = [...groupsPanel];
-        updatedPanel[i].show = !updatedPanel[i].show;
+        var panelToggle = updatedPanel.find(p => p.groupID ==panel.groupID && p.course == panel.course && panel.compenetID == p.compenetID )
+        panelToggle.show =!panelToggle.show
         setGroupsPanel(updatedPanel)   
+
     }
 
 
@@ -38,7 +40,7 @@ function ManageGroups() {
     
     function getUserGroups(){
 
-        setGroupsPanel(groupsJSON)
+        setGroupsPanel([...groupsJSON])
         //console.log(res,"user groups loaded.")
 
         //API
@@ -92,9 +94,9 @@ function ManageGroups() {
                 return(
                     <div>
 
-                    <span  onClick={() => toggleGroupsCollapsable(panel.id)} 
+                    <span  onClick={() => toggleGroupsCollapsable(panel)} 
                     type="button" class="manage-groups-panel-card-title">
-                        {panel.course+" "+panel.component} {panel.owner? "[OWNER]":""}
+                        {panel.course+" "+panel.component} {panel.owner? "[OWNER]":""} {panel.status =="pending"? "[pending]":""}
                     </span>
 
                     {panel.show?
@@ -106,7 +108,7 @@ function ManageGroups() {
                              <div className ="manage-groups-panel-card-item">
                  
                                  <div className="member-name"> {member.name} </div>
-                                 {panel.owner? <button onClick={()=> removeTeamMember(member.name, panel.id)} className="member-remove">remove</button>:<div></div>}
+                                 {panel.owner && member.userID != userID? <button onClick={()=> removeTeamMember(member.name, panel.id)} className="member-remove">remove</button>:<div></div>}
                              </div>
                              )
                          })

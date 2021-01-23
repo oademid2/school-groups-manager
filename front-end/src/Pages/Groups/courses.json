@@ -35,9 +35,34 @@
                         ]
                     }
                 ]
+            },
+            {
+                "id":"L1",
+                "courseID":"SE4455",
+                "title" :"Lab1",
+                "groups":[]
             }
         ]
 
+    },
+
+    {
+        "id": "SE4455X",
+        "title": "SE4455X"
+    },
+    {
+        "id": "SE4455X",
+        "title": "SE4455X"
+    },
+    {
+        "id": "SE4455X",
+        "title": "SE4455X"
+    },
+    {
+        "id": "SE4455X",
+        "title": "SE4455X"
     }
+
+
 
 ]

@@ -1,16 +1,17 @@
 
 .notifications-panel{
-    background-color: brown;
+    background-color: none;
     margin-top: 0px;
 }
 
 .notifications-grid{
-    background-color: rgb(255, 255, 255);
+    background-color: none;
     max-height: 380px;
     min-height: 380px;
     overflow: scroll;
     border: 1px solid;
     border-color: rgb(221, 221, 221);
+    border: none;
 }
 
 .request-card{
@@ -19,8 +20,10 @@
     background-color: #ffffff;
     border: 1px solid;
     border-color: rgb(221, 221, 221);
-    padding: 10px 10px;
-    margin: 0px;
+    border: none;
+    border-radius: 8px;
+    padding: 14px 10px;
+    margin: 7px 0px;
     float: left;
 }
 .request-card-text{
@@ -36,10 +39,12 @@
 }
 
 .notifications-panel-title{
-    font-weight: 700px;
-    background-color: rgb(199, 199, 199);
-    background: black;
-    padding: 10px;
+    background-color: none;
+    text-align: left;
+    font-size: 30px;
+    font-weight: 600;
+    padding: 15px;
+    margin: 0px;
 }
 
 .request-card-btns {

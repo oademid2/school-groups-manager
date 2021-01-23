@@ -24,5 +24,31 @@
                 "name": "Nick"
             }
         ]
+    },
+    {
+        "groupID":"124",
+        "courseID":"SE4454",
+        "componentID":"L2",
+        "courseTitle":"SE4454B",
+        "componentTitle":"Lab2",
+        "status":"accepted",
+        "members":[
+            {
+                "userID": "123",
+                "name": "Kitan"
+            },
+            {
+                "userID": "124",
+                "name": "Josh"
+            },
+            {
+                "userID": "125",
+                "name": "Steve"
+            },
+            {
+                "userID": "126",
+                "name": "Nick"
+            }
+        ]
     }
 ]

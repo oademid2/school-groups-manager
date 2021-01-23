@@ -1,15 +1,20 @@
 
 .manage-groups-panel-title{
-    background-color: rgb(0, 0, 0);
+    background-color: none;
+    text-align: left;
+    font-size: 30px;
+    font-weight: 600;
     padding: 15px;
     margin: 0px;
 }
 
 .manage-groups-panel-card-title{
     color: black;
-    background-color: rgb(219, 215, 215);
+    background-color: rgb(255, 255, 255);
     border: 1px solid;
     border-color: rgb(140, 140, 140);
+    border: none;
+    border-radius: 8px;
 
     cursor: pointer;
     padding: 18px;
@@ -20,23 +25,56 @@
 }
 
 .manage-groups-panel-grid{
-    background-color: rgb(255, 255, 255);
+    /*background-color: rgb(255, 255, 255);
     border: 1px solid;
     border-color: rgb(221, 219, 219);
-    margin: 0px;
+    margin: 0px;*/
     min-height: 400px;
     max-height: 400px;
     overflow: scroll;
 }
 
+.manage-groups-panel-card{
+    display: block;
+    margin-top:10px;
+    margin-bottom: 10px;
+    max-height: 1000px;
+}
+
+.manage-groups-panel-card-items-group{
+    margin-top:10px;
+    margin-bottom: 10px;
+    border: 3px solid; 
+    border-color: rgb(42, 111, 61);
+    border-radius: 0px;
+    border: none;
+    background-color: white;
+
+    transition: all 0.5s ease;
+    max-height: 0px;
+    overflow: hidden;
+    
+}
+
+.manage-groups-panel-card-items-group.active{
+    transition: all 0.5s ease;
+    max-height: 145px;
+    overflow: scroll;
+}
+
+
 .manage-groups-panel-card-item{
     padding: 5px;
+    margin: 0px;
     border: 0.2px solid; 
     border-color: rgb(234, 231, 231);
     display: inline-block;
     float: left;
     color: black;
     width: 100%;
+    background-color: white;
+    transition: background-color 0.3s ease;
+    border:none;
 }
 
 

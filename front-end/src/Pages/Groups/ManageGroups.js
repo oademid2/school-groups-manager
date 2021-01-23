@@ -2,30 +2,40 @@ import './Groups.css';
 import './ManageGroups.css';
 
 import React, { useState,  useEffect} from 'react';
-import { Collapse } from 'antd';
+import { Drawer, Button, Modal } from 'antd';
+import MeetingGroups from './MeetingGroups'
+import "antd/dist/antd.css";
+
 import api from './api';
 import groupsJSON from './groups.json'
 
-
-const { Panel } = Collapse;
-
 const userID = 123;
+
 function ManageGroups() {
     
-    //TODO: initialize as empty
+    ////STATES
+    //////////////
+
+    //data states
     const [userGroups, setUserGroups] = useState([])
 
+    //display information states
     const [groupsPanel, setGroupsPanel] = useState([]);
+    const [groupToSchedule, setGroupToSchedule] = useState({});
 
+    //display boolean states
+    const [showMeetingComponentBool, setShowMeetingComponentBool] = useState(false);
 
    
     function toggleGroupsCollapsable(panel) {
         var updatedPanel = [...groupsPanel];
-        var panelToggle = updatedPanel.find(p => p.groupID ==panel.groupID && p.courseID == panel.course && panel.compenetID == p.compenetID )
+        var panelToggle = updatedPanel.find(p => p.groupID ==panel.groupID && p.courseID == panel.courseID && panel.compenetID == p.compenetID )
         panelToggle.show =!panelToggle.show
         setGroupsPanel(updatedPanel)   
 
     }
+
+    const closeMeetingComponent = () => {setShowMeetingComponentBool(false);};
 
 
     useEffect(() => {
@@ -75,6 +85,27 @@ function ManageGroups() {
         
     }
 
+    function scheduleGroup(group){
+        setGroupToSchedule(group)
+        setShowMeetingComponentBool(true)
+    }
+
+    function meetingTimeSent(){
+        //TODO: api to send meeting request
+        let secondsToGo = 1;
+        closeMeetingComponent()
+        const modal = Modal.success({
+            title: 'Confirmed',
+            content: `Your meeting request has been sent.`,
+          })
+          const timer = setInterval(() => {
+            secondsToGo -= 1;
+          }, 1000);
+          setTimeout(() => {
+            clearInterval(timer);
+            modal.destroy();
+          }, secondsToGo * 1000);
+    }
 
   return (
     <div className="groups-panel manage-groups-panel">
@@ -86,18 +117,20 @@ function ManageGroups() {
         {
             groupsPanel.map(panel =>{
                 return(
-                    <div>
+                    <div className="manage-groups-panel-card">
 
                     <span  
                         onClick={() => toggleGroupsCollapsable(panel)} 
                         type="button" class="manage-groups-panel-card-title">
                         {panel.courseTitle+" "+panel.componentTitle} {panel.owner? "[OWNER]":""} 
-                        {panel.status =="pending"? "[pending]":""}
+                        {panel.status =="pending"? "[pending]":<button onClick={()=>scheduleGroup(panel)}> schedule</button>}
+                
                     </span>
 
-                    {panel.show?
+                    {true?
+                    
                      //<NameListCard  group={panel} removeTeamMember={removeTeamMember} isOwner={panel.owner} users={panel.members}></NameListCard>
-                        <div>
+                        <div className={"manage-groups-panel-card-items-group " + (panel.show?"active height_auto":"")}>
                             {
                                 panel.members.map(member =>{
                                     return(
@@ -123,7 +156,19 @@ function ManageGroups() {
 
         </div>
 
-
+        <Drawer
+            title="Basic Drawer"
+            placement="bottom"
+            height="600"
+            closable={true}
+            onClose={closeMeetingComponent}
+            visible={showMeetingComponentBool}
+        >
+            <MeetingGroups 
+                onClose={meetingTimeSent} 
+                group={groupToSchedule}>
+            </MeetingGroups>
+         </Drawer>
     </div>
   );
 }

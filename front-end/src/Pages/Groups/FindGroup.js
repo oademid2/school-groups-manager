@@ -107,11 +107,11 @@ function FindGroup(props) {
                 setFindGroupsMode(true)
                 resetCourse()
                 //testButton()
-                }} className={`find-groups-btn ${findGroupsMode? "active":""}`}>CREATE</div>
+                }} className={`find-groups-btn ${findGroupsMode? " active":""}`}>CREATE</div>
             <div onClick={()=> {
                 setFindGroupsMode(false)
                 resetCourse()
-            }} className={`find-groups-btn ${!findGroupsMode? "active":""}`}>JOIN</div>
+            }} className={`find-groups-btn ${!findGroupsMode? " active":""}`}>JOIN</div>
         </div>
         
         <div className="collapsable-groups">
@@ -148,10 +148,10 @@ function FindGroup(props) {
     
 
         <div className="groups-dropdown-menu">
-        <div className="groups-dropdown-menu-title">{activeGroup? "already in group":"Select A Group"}</div>
+        <div  className={"groups-dropdown-menu-title "+(!activeComponent?"inactive":"")}>{activeGroup? "already in group":"Select A Group"}</div>
         {
             activeComponent && findGroupsMode?
-                <div className={`groups-dropdown-menu-items2`}>
+                <div className={`groups-dropdown-menu-items2 ` + (activeComponent?" menu-group-transition":"")}>
                     
                          {activeGroup?
                             <GroupsDropDownPanel 
@@ -174,7 +174,7 @@ function FindGroup(props) {
                         }                    
                 </div>
             :
-            <div className={`groups-dropdown-menu-items`}>
+            <div className={`groups-dropdown-menu-items` + (activeComponent?" menu-group-transition":"")}>
             {activeCourseGroups?
                 
                 activeCourseGroups.map(group =>{
@@ -219,10 +219,10 @@ function FindGroup(props) {
 
 function DropdownPanel(props){
     return(
-        <div className="groups-dropdown-menu">
-        <div onClick={props.togglePanel} className="groups-dropdown-menu-title">{props.activeData? props.activeTitle: props.defaultTitle}</div>
-            <div>
-                {props.showPanel?
+        <div className={"groups-dropdown-menu"}>
+        <div onClick={props.togglePanel} className={"groups-dropdown-menu-title "+(!props.showPanel && !props.activeData?"inactive":"")}>{props.activeData? props.activeTitle: props.defaultTitle}</div>
+            <div className={"groups-dropdown-menu-items-group "+(!props.showPanel?"":"menu-transition")}>
+                {true?
                     props.panelsData.map(panel =>{
                         return(
                             <div>

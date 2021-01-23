@@ -2,14 +2,11 @@ import './FindGroup.css';
 import React, { useState, useEffect} from 'react';
 import api from './api.js'
 
-import coursesJSON from './courses.json'
-import groupsJSON from './groups.json'
-
 import GroupsDropDownPanel from './components/GroupsDropDownPanel.js'
 
 var userID = 123;
 
-function FindGroup() {
+function FindGroup(props) {
 
     //Display Data Varaibles
     const[userCourses, setUserCourses] = useState([]);
@@ -26,8 +23,8 @@ function FindGroup() {
     //load as JSON friendly
     useEffect(() => {
         // TODO: move to groups.js set courses based on props
-        setUserCourses(coursesJSON)
-        setGroupsList(groupsJSON)
+        setUserCourses(props.coursesJSON)
+        setGroupsList(props.groupsJSON)
         console.log("courses info loaded.")
 
         //API CALL
@@ -41,6 +38,9 @@ function FindGroup() {
             console.log(res,"user groups loaded.")
 
         })*/
+        return function cleanup(){
+            console.log("unmount")
+        }
        
     }, []);
 
@@ -56,14 +56,15 @@ function FindGroup() {
 
     function componentSelected(component){
         
-        var groupMemberOf = groupsList.find(group => (group.course == activeCourse.title) && (group.component == component.title))
-       
+        var groupMemberOf = groupsList.find(group => (group.courseID == activeCourse.id) && (group.componentID == component.id))
+        console.log("ACG: ", activeCourseGroups, groupMemberOf)
         setActiveComponent(component)
         if(groupMemberOf){
             setActiveGroup(groupMemberOf)
             setActiveCourseGroups([groupMemberOf])
         }else setActiveCourseGroups(component.groups)
-        console.log("members loaded.")
+        console.log("ACG: ", activeCourseGroups)
+
     }
 
     function resetCourse(){
@@ -79,19 +80,16 @@ function FindGroup() {
     function createNewGroup(){
         var groupsList_ = groupsList
         var newgroup = {
-            "id":0,
-            "owner": true,
-            "course":"SE4455B",
-            "component":"Lab4",
             "groupID":"123",
-            "courseID":"123",
-            "componentID":"123",
+            "courseID":"SE4455",
+            "componentID":"L1",
+            "courseTitle":"SE4455B",
+            "componentTitle":"Lab1",
             "status":"accepted",
             "members":[
                 {
                     "userID": userID,
                     "name": "user.name",
-                    "picture_url": "example.com"
                 }
             ]
     }
@@ -123,10 +121,12 @@ function FindGroup() {
             showPanel={!activeCourse}
             activeData={activeCourse} 
             panelsData={userCourses} 
-            togglePanel={null}
+            togglePanel={resetCourse}
             panelClicked={courseSelected}
             defaultTitle={"Select A Course"}
             activeTitle ={activeCourse? activeCourse.title:null}
+            userCourses={userCourses}
+            setUserCourses={setUserCourses}
             ID = "id"
             panelTitle="title"
             //customPanel={CustomPanel({text: "heyyyyy"})}
@@ -163,7 +163,6 @@ function FindGroup() {
                                 onRemove={
                                     function(){
                                         setActiveCourseGroups(activeComponent.groups)
-                                        //groupsJSON = groupsList
                                         console.log("sub")
                                     }
                                 }>
@@ -190,7 +189,7 @@ function FindGroup() {
                         onRequest={
                             function(){
                                 setActiveCourseGroups([group])
-                                props.groupsJSON = groupsJSON;
+                                //props.groupsJSON = groupsJSON;
                             }
 
                         }

@@ -21,7 +21,7 @@ function ManageGroups() {
    
     function toggleGroupsCollapsable(panel) {
         var updatedPanel = [...groupsPanel];
-        var panelToggle = updatedPanel.find(p => p.groupID ==panel.groupID && p.course == panel.course && panel.compenetID == p.compenetID )
+        var panelToggle = updatedPanel.find(p => p.groupID ==panel.groupID && p.courseID == panel.course && panel.compenetID == p.compenetID )
         panelToggle.show =!panelToggle.show
         setGroupsPanel(updatedPanel)   
 
@@ -91,7 +91,7 @@ function ManageGroups() {
                     <span  
                         onClick={() => toggleGroupsCollapsable(panel)} 
                         type="button" class="manage-groups-panel-card-title">
-                        {panel.course+" "+panel.component} {panel.owner? "[OWNER]":""} 
+                        {panel.courseTitle+" "+panel.componentTitle} {panel.owner? "[OWNER]":""} 
                         {panel.status =="pending"? "[pending]":""}
                     </span>
 

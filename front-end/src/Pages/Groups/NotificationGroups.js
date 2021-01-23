@@ -8,7 +8,7 @@ import groupReq from './receivedGroupRequests.json'
 
 
 
-function NotificationGroups() {
+function NotificationGroups(props) {
 
   const userID=123;
   const [pendingRequests, setPendingRequests] = useState([])

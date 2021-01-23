@@ -7,11 +7,38 @@ import NotificationGroups from './NotificationGroups';
 
 import coursesJSON from './courses.json'
 import groupsJSON from './groups.json'
+import React, { useState, useEffect} from 'react';
+import { convertLegacyProps } from 'antd/lib/button/button';
 
 
 
 
 function Groups() {
+
+  const [groupsList, setGroupsList] = useState([])
+  const [coursesList, setCoursesList] = useState([])
+
+  useEffect(() => {
+    // TODO: move to groups.js set courses based on props
+    setGroupsList(groupsJSON)
+    setCoursesList(coursesJSON)
+    console.log("courses info loaded.")
+
+
+    //API CALL
+    /*api.getCoursesInfo(userID).then((res)=>{
+        setUserCourses(res.data)
+        console.log(res.data,"courses info loaded.")
+    })*/
+    /*api.getUserGroups(userID).then((res)=>{
+        
+        setGroupsList(res.data)
+        console.log(res,"user groups loaded.")
+
+    })*/
+   
+}, []);
+
   return (
 
     <div className="mobile-root groups">
@@ -26,9 +53,9 @@ function Groups() {
           </div>
 
         <Switch>
-          <Route path='/groups/notifications' component={NotificationGroups}/>  
+          <Route path='/groups/notifications' component={()=><NotificationGroups></NotificationGroups>}/>  
           <Route path='/groups/manage' component={ManageGroups}/>
-          <Route path='/groups/find' component={FindGroup}/>
+          <Route path='/groups/find' component={()=><FindGroup groupsJSON = {groupsList}  coursesJSON={coursesList}></FindGroup>}/>
         </Switch>
 
       </Router>

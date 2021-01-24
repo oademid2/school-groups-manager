@@ -1,0 +1,61 @@
+.groups{
+    background-color: rgb(38, 38, 38);
+    font-family: Helvetica, sans-serif;
+    min-height:600px !important;
+    max-height:600px !important;
+    overflow: scroll;
+}
+
+
+/* Add a black background color to the top navigation */
+.groups-topnav {
+    overflow: hidden;
+    display: inline-block;
+    font-size: 25px;
+    text-decoration: none;
+    margin: 10px 0px 0px 0px;
+}
+
+.groups-topnav a{
+    text-decoration: none;
+}
+
+  .my-nav-icon{
+      color:rgb(66, 66, 66);
+      background-color: rgb(255, 255, 255);
+      border: 1px solid;
+      border-radius: 40px;
+      padding: 16px 18px;
+      box-shadow: 2px 2px 12px 5px rgba(0,0,0,0.71);
+
+      margin: 20px 14px 20px 14px;
+      text-decoration: none;
+  }
+  
+  .groups-panel{
+      background-color:none;
+      min-height:00px;
+      display: block;
+  }
+
+
+  .active, .collapsible:hover {
+
+  }
+  
+  .content {
+    padding: 0 18px;
+    display: block;
+    overflow: hidden;
+    background-color: #762525;
+  }
+
+  .groups-panel{
+      width:90%;
+      margin:auto;
+  }
+
+  .height_auto{
+    height:auto!important;
+}
+

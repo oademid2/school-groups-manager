@@ -1,0 +1,68 @@
+
+[
+    {
+        "id": "SE4455",
+        "title": "SE4455B",
+        "components": [
+            {   "id":"L1",
+                "courseID":"SE4455",
+                "title" :"Lab1",
+                "groups":[
+                    {
+                        "groupID":"123",
+                        "courseID":"SE4455",
+                        "componentID":"L1",
+                        "courseTitle":"SE4455B",
+                        "componentTitle":"Lab1",
+                        "status":"accepted",
+                        "members":[
+                            {
+                                "userID": "123",
+                                "name": "Kitan"
+                            },
+                            {
+                                "userID": "124",
+                                "name": "Josh"
+                            },
+                            {
+                                "userID": "125",
+                                "name": "Steve"
+                            },
+                            {
+                                "userID": "126",
+                                "name": "Nick"
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id":"L1",
+                "courseID":"SE4455",
+                "title" :"Lab1",
+                "groups":[]
+            }
+        ]
+
+    },
+
+    {
+        "id": "SE4455X",
+        "title": "SE4455X"
+    },
+    {
+        "id": "SE4455X",
+        "title": "SE4455X"
+    },
+    {
+        "id": "SE4455X",
+        "title": "SE4455X"
+    },
+    {
+        "id": "SE4455X",
+        "title": "SE4455X"
+    }
+
+
+
+]

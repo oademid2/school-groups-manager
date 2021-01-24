@@ -1,0 +1,44 @@
+[
+    {
+    "userID":"John",
+    "courseID":"SE445BB",
+    "componentID": "Lab 1",
+    "status": "pending",
+    "groupID":"123"
+  },
+  {
+    "userID":"John1",
+    "courseID":"SE445BB",
+    "componentID": "Lab 1",
+    "status": "pending",
+    "groupID":"123"
+  },
+  {
+    "userID":"John2",
+    "courseID":"SE445BB",
+    "componentID": "Lab 1",
+    "status": "pending",
+    "groupID":"123"
+  },
+  {
+    "userID":"John3",
+    "courseID":"SE445BB",
+    "componentID": "Lab 1",
+    "status": "pending",
+    "groupID":"123"
+  },
+  {
+    "userID":"John",
+    "courseID":"SE445BB",
+    "componentID": "Lab 1",
+    "status": "pending",
+    "groupID":"123"
+  },
+  {
+    "userID":"John",
+    "courseID":"SE445BB",
+    "componentID": "Lab 1",
+    "status": "pending",
+    "groupID":"123"
+  }
+]

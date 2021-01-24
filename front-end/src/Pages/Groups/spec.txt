@@ -1,0 +1,95 @@
+
+-----------------------------------------------
+getCouseInfo
+-----------------------------------------------
+return courses.json
+[ courseInfo...]
+
+array of courseInfo JSON objects
+
+courseInfo objects
+--------------
+{
+    "id": "SE4455B",
+    "title": "SE4455B",
+    "components": [ componentsInfo... ]
+}
+
+
+componentsInfo objects
+--------------
+{
+    "id":"Lab4",
+    "courseID":"123",
+    "name":"Lab4",
+    "groups":[ groupsObject...] (list of groups in this component)
+}
+
+groupsInfo object
+{
+    "id": "..."
+    "courseID":"123",
+    "courseTitle":"SE4455B",
+    "componentID":"123",
+    "componentTitle":"Lab4",
+    "status":"accepted",
+    "owner":true,
+    "members":[ membersInfo...] (list of members that are in this group)
+}
+
+
+membersInfo Object
+- User objects that are
+{
+    "userID": "123",
+    "name": "Kitan",
+    "picture_url": "example.com"
+}
+
+
+
+
+-----------------------------------------------
+getMeetings(start, end, ...users)
+-----------------------------------------------
+[
+    {
+        "DATE_KEY":[
+            {
+                month: xx,
+                day: xx,
+                start: xx,
+                end: xx
+            }
+        ]
+    }
+]
+getMeetings(start,end,...users)
+------------
+[...userMeetingsObjects]
+>return array of userMeetingsObjects, each item in array representing userMeetingsObjects for each user in users
+
+
+userMeetingsObjects
+------
+{ JSON of meeting objects}
+each item in the json has a key of a date and a value of an array of timeObjects
+
+{
+    "date1": [...timeObjects],
+    "date2": [...timeObjects],
+    ....
+}
+
+
+timeObjects
+-------
+information about meeting time -- month it is, year, start time, end time
+{
+    "month": 1,*
+    "day": 22,*
+    "year": 2021,*
+    "start": 10,
+    "end": 12
+}
+

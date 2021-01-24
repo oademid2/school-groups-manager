@@ -1,0 +1,72 @@
+
+.notifications-panel{
+    background-color: none;
+    margin-top: 0px;
+}
+
+.notifications-grid{
+    background-color: none;
+    max-height: 380px;
+    min-height: 380px;
+    overflow: scroll;
+    border: 1px solid;
+    border-color: rgb(221, 221, 221);
+    border: none;
+}
+
+.request-card{
+    display: inline-block;
+    width: 100%;
+    background-color: #ffffff;
+    border: 1px solid;
+    border-color: rgb(221, 221, 221);
+    border: none;
+    border-radius: 8px;
+    padding: 14px 10px;
+    margin: 7px 0px;
+    float: left;
+}
+.request-card-text{
+    float: left;
+    padding-left: 0px;
+    color: black;
+}
+
+.request-card-text p{
+    margin:0px;
+    padding-left: 0px;
+    text-align: left;
+}
+
+.notifications-panel-title{
+    background-color: none;
+    text-align: left;
+    font-size: 30px;
+    font-weight: 600;
+    padding: 15px;
+    margin: 0px;
+}
+
+.request-card-btns {
+    float: right;
+    margin:0px;
+}
+
+.request-card-btns button{
+    margin-left: 10px;
+}
+
+
+.accept{
+    background-color: rgb(63, 165, 63);
+    color: white;
+    border: none;
+    padding: 7px;
+}
+
+.decline{
+    background-color: rgb(206, 44, 44);
+    color: white;
+    border: none;
+    padding: 7px;
+}

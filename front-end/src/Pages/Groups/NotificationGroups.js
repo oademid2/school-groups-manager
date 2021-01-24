@@ -1,9 +1,9 @@
-import './Groups.css';
-import './NotificationGroups.css';
+import './style/Groups.css';
+import './style/NotificationGroups.css';
 import { BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import api from './api';
-import groupReq from './receivedGroupRequests.json'
+import groupReq from './mock-data/receivedGroupRequests.json'
 
 
 

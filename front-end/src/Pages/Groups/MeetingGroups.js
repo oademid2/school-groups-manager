@@ -1,14 +1,13 @@
-import './MeetingGroups.css'
+import './style/MeetingGroups.css'
 import React, { useEffect, useState } from 'react';
-import moment from 'moment';
+import { Modal, TimePicker} from 'antd';
 
-import { Modal, Button } from 'antd';
-import { DatePicker, TimePicker, Select, Space } from 'antd';
+import moment from 'moment';
 import TIME from './HELPER.js'
 
+import meetingsJSON from './mock-data/meetings.json'
+
 const { RangePicker } = TimePicker;
-
-
 
 function MeetingGroups(props) {
 
@@ -58,19 +57,59 @@ function MeetingGroups(props) {
         }
     }
 
-    var timeSpan = [[1,22], [1,23]]
+    var timeSpan = [[0,22], [0,23]]
 
 
 
     useEffect(() => {
-        //api to get user times
 
+        var now = moment()
+
+        for(var i=0;i<0;i++){
+            let day = +now.format('DD');
+            let month = now.month();
+            timeSpan.push([month,day])
+            now = now.add(1, 'days')
+        }
+
+        var timesDict = {}
+        var TIMES;
+        //api to get user times
         for( var i in timeSpan){
+            
+            TIMES = []
+            var key = ""+(timeSpan[i][0]+1)+"/"+timeSpan[i][1];
+            var month = timeSpan[i][0];
+            var day = timeSpan[i][1];
+
+        
+            for(var j in meetingsJSON){
+                
+                if(meetingsJSON[j][key])TIMES.push(...meetingsJSON[j][key])
+                console.log(key, meetingsJSON[j][key])
+            }
+
+           
+            key = ""+month+"/"+day;
+            timesDict[key] = {}
+            timesDict[key].times = findFreeTime( TIMES)
+            timesDict[key].month = month
+            timesDict[key].day = day;
+
+
+        }
+        //console.log(timesDict)
+
+
+
+
+        /*for( var i in timeSpan){
             var key = ""+timeSpan[i][0]+"/"+timeSpan[i][1];
             console.log(key)
             timesDict[key].times = findFreeTime( timesDict[key].times)
-        }
+        }*/
 
+        console.log(timesDict)
         setTimesByDay(timesDict)
         
         //sortTimesByDay
@@ -99,9 +138,6 @@ function MeetingGroups(props) {
                 }
             }
         }
-
-        console.log(busyTimes)
-
         var start = 0;
         var end = busyTimes.shift();
         var freeTimes = []
@@ -123,8 +159,6 @@ function MeetingGroups(props) {
         }
 
         if(start > end)freeTimes.push([start+0.5,24])
-        console.log(busyTimes)
-        console.log(freeTimes)
 
         return freeTimes
     }
@@ -136,6 +170,7 @@ function MeetingGroups(props) {
     const [showTimePickerBool, setShowTimePickerBool] = useState(false);
 
     const [activeRange, setActiveRange] = useState(false);
+    const [defaultTime, setDefaultTime] = useState(false);
     const [activeTime, setActiveTime] = useState(null);
 
 
@@ -153,7 +188,9 @@ function MeetingGroups(props) {
       };
 
       const rangePickerChanged = newRange => {
+        console.log(newRange)
         setActiveTime(newRange)
+        
       };
 
       const selectedTime = (day, month, time) => {
@@ -163,6 +200,11 @@ function MeetingGroups(props) {
             month: month,
             time: time
         })
+
+        console.log(time)
+        setActiveTime([moment(time[0]+':00', 'H:mm'),moment(time[1]+':00', 'H:mm')])
+        
+        //[moment(activeTime[0]+':00', 'HH:mm'),moment(activeTime[1]+':00', 'HH:mm')]
         setShowTimePickerBool(true);
     };
 
@@ -195,11 +237,30 @@ function MeetingGroups(props) {
             })
             
         }   
-        {activeRange?
-            <Modal title="Basic Modal" visible={showTimePickerBool} onOk={meetingTimeSumbit} onCancel={hideTimePicker}>
-                Select a time on: {TIME.intToMonth(activeRange.month)} {activeRange.day} <br></br>
-                <RangePicker  defaultValue={[moment(''+activeRange.time[0], 'HH:mm'),moment(''+activeRange.time[1], 'HH:mm')]} use12Hours={true} showNow={false} minuteStep={30} format={'HH:mm'} onChange={rangePickerChanged} />
-            </Modal>:<div></div>
+        {activeTime?
+            <Modal 
+                title="" 
+                visible={showTimePickerBool} 
+                onOk={meetingTimeSumbit} 
+                onCancel={hideTimePicker}
+                okText={"schedule"}
+            >
+                    <span className="group-meetings-modal-title">
+                        {TIME.intToMonth(activeRange.month)} {activeRange.day}
+                    </span>
+                    <RangePicker  
+                       // defaultValue={activeTime} 
+                        value = {activeTime} 
+                        user12Hours={true} 
+                        showNow={false} 
+                        minuteStep={30} 
+                        format={'HH:mm a'} 
+                        onChange={rangePickerChanged}
+                        formatTime= 'g:i a'
+                        validateOnBlur= {false}
+                    />
+            </Modal>:
+            <div></div>
         }
             
         </div>
@@ -226,10 +287,12 @@ function DayTimes(props){
 }
 
 function TimeBlock(props){
-    console.log(props.time)
     return(
         <div>
-            <div onClick={()=> props.selectedTime(props.day, props.month,props.time)} className="TimeBlock">
+            <div 
+                onClick={()=> props.selectedTime(props.day, props.month,props.time)} 
+                className="TimeBlock"
+            >
                 <p>{TIME.floatToTime(props.time[0]) + " - "  + TIME.floatToTime(props.time[1])}</p>
             </div>
 

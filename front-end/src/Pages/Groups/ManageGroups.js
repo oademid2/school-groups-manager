@@ -1,5 +1,5 @@
-import './Groups.css';
-import './ManageGroups.css';
+import './style/Groups.css';
+import './style/ManageGroups.css';
 
 import React, { useState,  useEffect} from 'react';
 import { Drawer, Button, Modal } from 'antd';
@@ -7,7 +7,7 @@ import MeetingGroups from './MeetingGroups'
 import "antd/dist/antd.css";
 
 import api from './api';
-import groupsJSON from './groups.json'
+import groupsJSON from './mock-data/groups.json'
 
 const userID = 123;
 
@@ -157,7 +157,7 @@ function ManageGroups() {
         </div>
 
         <Drawer
-            title="Basic Drawer"
+            title="Available Group Times"
             placement="bottom"
             height="600"
             closable={true}

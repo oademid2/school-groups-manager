@@ -1,4 +1,4 @@
-import './FindGroup.css';
+import './style/FindGroup.css';
 import React, { useState, useEffect} from 'react';
 import api from './api.js'
 

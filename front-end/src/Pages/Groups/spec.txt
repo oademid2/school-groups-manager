@@ -1,6 +1,7 @@
 
-
+-----------------------------------------------
 getCouseInfo
+-----------------------------------------------
 return courses.json
 [ courseInfo...]
 
@@ -44,3 +45,51 @@ membersInfo Object
     "name": "Kitan",
     "picture_url": "example.com"
 }
+
+
+
+
+-----------------------------------------------
+getMeetings(start, end, ...users)
+-----------------------------------------------
+[
+    {
+        "DATE_KEY":[
+            {
+                month: xx,
+                day: xx,
+                start: xx,
+                end: xx
+            }
+        ]
+    }
+]
+getMeetings(start,end,...users)
+------------
+[...userMeetingsObjects]
+>return array of userMeetingsObjects, each item in array representing userMeetingsObjects for each user in users
+
+
+userMeetingsObjects
+------
+{ JSON of meeting objects}
+each item in the json has a key of a date and a value of an array of timeObjects
+
+{
+    "date1": [...timeObjects],
+    "date2": [...timeObjects],
+    ....
+}
+
+
+timeObjects
+-------
+information about meeting time -- month it is, year, start time, end time
+{
+    "month": 1,*
+    "day": 22,*
+    "year": 2021,*
+    "start": 10,
+    "end": 12
+}
+

@@ -9,13 +9,14 @@ class TIME {
         }else if ( float < 13 && float >= 12){
             return float+" PM"
         }else if(float >= 0 && float < 1){
-         return float + " AM"
+         return (float+12) + " AM"
          }else{
             return float%12 + "PM"
         }
 }
 
 static intToMonth= (int) => {
+    int += 1;
     switch(int){
         case 1:
             return "January"

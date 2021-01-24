@@ -1,12 +1,12 @@
-import './Groups.css';
+import './style/Groups.css';
 import { BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 
 import ManageGroups from './ManageGroups';
 import FindGroup from './FindGroup';
 import NotificationGroups from './NotificationGroups';
 
-import coursesJSON from './courses.json'
-import groupsJSON from './groups.json'
+import coursesJSON from './mock-data/courses.json'
+import groupsJSON from './mock-data/groups.json'
 import React, { useState, useEffect} from 'react';
 import { convertLegacyProps } from 'antd/lib/button/button';
 

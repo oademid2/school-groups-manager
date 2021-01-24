@@ -1,6 +1,7 @@
 import './style/MeetingGroups.css'
 import React, { useEffect, useState } from 'react';
 import { Modal, TimePicker} from 'antd';
+import CustomWeeklyScheduleView from './CustomWeeklyScheduleView.js'
 
 import moment from 'moment';
 import TIME from './HELPER.js'
@@ -11,7 +12,21 @@ const { RangePicker } = TimePicker;
 
 function MeetingGroups(props) {
 
+        ///STATES
+    ////////////
+
+    //display booleans
+    const [showTimePickerBool, setShowTimePickerBool] = useState(false);
+    const [activeRange, setActiveRange] = useState(false);
+    const [activeTime, setActiveTime] = useState(null);
+
+    //Information states
     const [timesByDay, setTimesByDay] = useState({})
+
+    //range of days we want to show in this view
+    const RANGE_OF_DAYS = 0;
+    //Dates in range...
+    var timeSpan = [[0,22], [0,23]] //TODO: init to [] -- populated by useEffect
     
     var TIMES = [
         {
@@ -44,16 +59,13 @@ function MeetingGroups(props) {
         }
     ]
 
-
-    var timeSpan = [[0,22], [0,23]]
-
-
+    
 
     useEffect(() => {
 
+        //Get dates within range
         var now = moment()
-
-        for(var i=0;i<0;i++){
+        for(var i=0;i<RANGE_OF_DAYS;i++){
             let day = +now.format('DD');
             let month = now.month();
             timeSpan.push([month,day])
@@ -141,17 +153,6 @@ function MeetingGroups(props) {
         return freeTimes
     }
 
-    ///STATES
-    ////////////
-
-    //display booleans
-    const [showTimePickerBool, setShowTimePickerBool] = useState(false);
-
-    const [activeRange, setActiveRange] = useState(false);
-    const [activeTime, setActiveTime] = useState(null);
-
-
-
       //onClick/Event type functions...
 
       const meetingTimeSumbit = () => {
@@ -190,17 +191,12 @@ function MeetingGroups(props) {
     return (
         <div >
 
-        {
-            Object.values(timesByDay).map(day =>{
-                return(
-                    <div>
-                    <h1>{TIME.intToMonth(day.month)+' '+day.day}</h1>
-                    <DayTimes selectedTime ={selectedTime} month={day.month} day={day.day} dayTimes={day.times}></DayTimes>
-                    </div>
-                )
-            })
-            
-        }   
+        <CustomWeeklyScheduleView
+            timesByDay={timesByDay}
+            selectedTime={selectedTime}
+       >
+
+        </CustomWeeklyScheduleView>
         {activeTime?
             <Modal 
                 title="" 

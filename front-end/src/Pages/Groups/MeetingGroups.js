@@ -44,18 +44,6 @@ function MeetingGroups(props) {
         }
     ]
 
-    var timesDict = {
-        "1/22":{
-        "month":1,
-        "day":22,
-        "times": TIMES
-        },
-        "1/23":{
-            "month":1,
-            "day":22,
-            "times": TIMES
-        }
-    }
 
     var timeSpan = [[0,22], [0,23]]
 
@@ -98,16 +86,6 @@ function MeetingGroups(props) {
 
 
         }
-        //console.log(timesDict)
-
-
-
-
-        /*for( var i in timeSpan){
-            var key = ""+timeSpan[i][0]+"/"+timeSpan[i][1];
-            console.log(key)
-            timesDict[key].times = findFreeTime( timesDict[key].times)
-        }*/
 
         console.log(timesDict)
         setTimesByDay(timesDict)
@@ -170,7 +148,6 @@ function MeetingGroups(props) {
     const [showTimePickerBool, setShowTimePickerBool] = useState(false);
 
     const [activeRange, setActiveRange] = useState(false);
-    const [defaultTime, setDefaultTime] = useState(false);
     const [activeTime, setActiveTime] = useState(null);
 
 
@@ -209,19 +186,6 @@ function MeetingGroups(props) {
     };
 
 
-
-  /*  function getTimesByDayDict(userTimes){
-        var SpanOfDates = [["01/22",1,22],["01/23",1,23]]
-        var timesInDay_ = {};
-        //for each day in span of dates
-        for(var i = 0; i<SpanOfDates.length;i++){
-           timesInDay_[SpanOfDates[i][0]] = userTimes_.find(obj => obj.month==SpanOfDates[i][1] && obj.day==SpanOfDates[i][2])
-        }
-
-        return timesInDay_
-        //find the times each user has 
-        //
-    }*/
 
     return (
         <div >
